@@ -6,16 +6,16 @@ const WAGE_PER_HOUR = 20;
 let empHours = 0;
 let empCheck = Math.floor(Math.random()*10) % 3;
 
-switch(empCheck){
-    case IS_PART_TIME :
-        empHours=4;
-        break;
-    case IS_FULL_TIME :
-        empHours = 8;
-        break;
-    default :
-        empHours = 0;
-        break;
+function getWorkingHours(empCheck){
+    switch(empCheck){
+        case IS_PART_TIME:
+            return PART_TIME_HOURS;
+        case IS_FULL_TIME:
+            return FULL_TIME_HOURS;
+        default :
+            return 0;
+    }
 }
+empHours = getWorkingHours(empCheck);
 let empWage = empHours * WAGE_PER_HOUR;
 console.log("Employee wage is "+empWage);
