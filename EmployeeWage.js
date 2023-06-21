@@ -9,8 +9,11 @@
     
     let total_emp_Hrs = 0;
     let total_working_Days = 0;
+
     let Emp_Wage_Array = new Array(); 
-    
+    let Emp_Wage_Map = new Map();
+    let Emp_Hrs_Map = new Map();
+
     function getWorkingHours(empCheck)
     {
     switch(empCheck) 
@@ -36,54 +39,33 @@
     {
         total_working_Days++;
         let empCheck = Math.floor(Math.random() * 10) % 3;
-        empHrs = getWorkingHours(empCheck);
-        total_emp_Hrs += getWorkingHours(empCheck); 
+        let empHrs = getWorkingHours(empCheck);
+        total_emp_Hrs += empHrs; 
         Emp_Wage_Array.push(calculateWages(empHrs));
+        Emp_Hrs_Map.set(total_working_Days , empHrs);
+        Emp_Wage_Map.set(total_working_Days, calculateWages(empHrs));
     }
     
     let empWage = calculateWages(total_emp_Hrs);
-    console.log("Total Hours: " + total_emp_Hrs + ", Emp Wage: " + empWage + ", Total Days: " + total_working_Days);
+
+    console.log("-------- Emp Daily Wage Array -------");
     console.log(Emp_Wage_Array);
 
-//UC7A
-const result1 = Emp_Wage_Array.reduce((total , current) => total + current);
-console.log(result1);
+    console.log("\n------ Emp Wage Map -------");
+    console.log(Emp_Wage_Map);
 
-//UC7B
+    console.log("\n-------- Emp Hour Map --------");
+    console.log(Emp_Hrs_Map);
 
-let dailycount = 0;
-function mapDayWithWages(dailyWage)
-{
-	dailycount++;
-	return dailycount + " = " + dailyWage;
-}
-let mapDayWithWageArr = Emp_Wage_Array.map(mapDayWithWages);
-console.log("Daily Wage Map: ");
-console.log(mapDayWithWageArr);
+    console.log("Total Hours: " + total_emp_Hrs + ", Emp Wage: " + empWage + ", Total Days: " + total_working_Days);
+    //console.log(Emp_Wage_Array);
 
-//UC7C
-const result2 = Emp_Wage_Array.filter(wage => wage == 160);
-console.log(result2);
+    function totalWages(totalwage , dailywage)
+    {
+        return totalwage + dailywage
+    }
 
-/*
-function findFull(dailyWage1){
-    return dailyWage1.inclueds("160");
-}
-const result3 = Emp_Wage_Array.find(findFull);
-console.log("First time full time wage earned on day: " + result3);
-*/
+    console.log("\n--------Total emp wage using map -------");
+    console.log("Emp wagemap total wages: " + Array.from(Emp_Wage_Map.values()).reduce(totalWages , 0));
 
-const result4 = Emp_Wage_Array.includes(element => element == 160);
-console.log(result4);
-
-const result5 = Emp_Wage_Array.some(value => value == 80);
-console.log(result5);
-
-function totalDaysWorked(numOfDays, dailyWage){
-    if(dailyWage > 0) 
-    return numOfDays + 1;
-    return numOfDays;
-}
-const result6 = Emp_Wage_Array.reduce(totalDaysWorked , 0);
-console.log(result6);
 }
